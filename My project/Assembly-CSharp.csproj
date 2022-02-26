@@ -40,6 +40,10 @@
      <Compile Include="Assets/Resources/Scripts/Singleton.cs" />
      <Compile Include="Assets/Resources/Scripts/MonsterSpawn.cs" />
      <Compile Include="Assets/Resources/Scripts/MonsterManager.cs" />
+     <Compile Include="Assets/Resources/Scripts/CameraManager.cs" />
+     <Compile Include="Assets/Resources/Scripts/HeartManager.cs" />
+     <Compile Include="Assets/Resources/Scripts/CloudManager.cs" />
+     <Compile Include="Assets/Resources/Scripts/CloudMove.cs" />
     <Reference Include="UnityEngine">
         <HintPath>/Applications/Unity/Hub/Editor/2020.3.20f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

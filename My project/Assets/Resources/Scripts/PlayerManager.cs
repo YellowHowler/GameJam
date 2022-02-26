@@ -12,18 +12,38 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] private float moveDur = 0.05f;
     [SerializeField] private float yBorder = 0.5f;
 
+    public GameObject playerObj;
+
     public Vector3 playerPos {get;set;}
+    public bool isFalling{get;set;}
+
+    public int maxHealth {get;set;}    
+    public int curHealth {get;set;}
 
     private float slope;
     private float height = 0.25f;
-    private bool isFalling = false;
     private Vector2 direction;
+
+    public void ChangeHealth(int healthChange)
+    {
+        int nextCurHealth = Mathf.Clamp(curHealth+healthChange, 0, maxHealth);
+        for(int i = curHealth; i > nextCurHealth; i--)
+        {
+            HeartManager.Instance.FadeHeart(i);
+        }
+    }
 
     protected override void Awake() {
         base.Awake();
         float xDif = FloorGrid.GetCellCenterWorld(new Vector3Int(1, 0, 0)).x - FloorGrid.GetCellCenterWorld(new Vector3Int(0, 0, 0)).x;
         float yDif = FloorGrid.GetCellCenterWorld(new Vector3Int(0, 1, 0)).y - FloorGrid.GetCellCenterWorld(new Vector3Int(0, 0, 0)).y;
         slope = xDif/yDif;
+        isFalling = false;
+
+        maxHealth = 5;
+        curHealth = maxHealth;
+
+        playerObj = gameObject;
     }
     private void Start() {
         gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Player";
@@ -85,6 +105,8 @@ public class PlayerManager : Singleton<PlayerManager>
                 direction.Normalize();
                 direction = new Vector2(direction.x, direction.y*(1/slope));
                 transform.Translate(direction*moveDur*characterSpeed);
+                Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
+                HeartManager.Instance.MoveHearts();
             }
 
             yield return new WaitForSeconds(moveDur);

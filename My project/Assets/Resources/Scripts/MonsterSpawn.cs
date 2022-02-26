@@ -5,7 +5,7 @@ using UnityEngine;
 public class MonsterSpawn : Singleton<MonsterSpawn>
 {
     [SerializeField] GameObject monsterObject;
-    private float spawnRate = 1.5f;
+    private float spawnRate = 3.5f;
     void Start()
     {
         StartCoroutine("SpawnMonster");
